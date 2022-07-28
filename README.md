@@ -79,7 +79,7 @@ To remove the proxy settings after installation
     ensure => 'absent',
   }
 ```
-### Upgrading the agent
+### Upgrading the Linux agent
 You can install a specific version of the agent by setting hiera variables to control the version downloaded `x64_download_path` and what filename to save the download to `downloaded_script`.
 ```yaml
 azurelaagent::install_linux::x64_download_path: https://github.com/microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.14.12-0/omsagent-1.14.12-0.universal.x64.sh
@@ -99,6 +99,9 @@ azurelaagent::install_linux::x64_download_path: https://github.com/microsoft/OMS
 azurelaagent::install_linux::downloaded_script: omsagent-1.14.16-0.universal.x64.sh
 ```
 This will cause the new version to be downloaded an an in-place upgrade will occur preserving the original `SourceComputerId` in Azure Log Analytics.
+### Upgrading the Windows agent
+Due to the way Microsoft packages and distributes the agent it is not possible to use above technique to upgrade the agent. The Windows agent ULR is always [https://go.microsoft.com/fwlink/?LinkId=828603](https://go.microsoft.com/fwlink/?LinkId=828603) and downloads the latest version. But you don't know the version until it is downloaded.
+
 
 ### Uninstalling the agent
 To uninstall the agent
