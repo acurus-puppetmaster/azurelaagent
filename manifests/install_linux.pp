@@ -76,9 +76,9 @@ class azurelaagent::install_linux (
     # }
 
     if ($use_proxy and $proxy != '' and $proxy != undef) {
-      $install_command = "${path_to_download}/${downloaded_script} --upgrade -p ${proxy} -w ${azure_id} -s ${azure_shared}"
+      $install_command = "${path_to_download}/${downloaded_script} --install -p ${proxy} -w ${azure_id} -s ${azure_shared}"
     } else {
-      $install_command = "${path_to_download}/${downloaded_script} --upgrade -w ${azure_id} -s ${azure_shared}"
+      $install_command = "${path_to_download}/${downloaded_script} --install -w ${azure_id} -s ${azure_shared}"
     }
 
     # Agent installation
@@ -89,6 +89,20 @@ class azurelaagent::install_linux (
       require => Exec['OMSAgent install script download'],
     }
 
+  } elsif($ensure == 'latest') {
+    if ($use_proxy and $proxy != '' and $proxy != undef) {
+      $upgrade_command = "${path_to_download}/${downloaded_script} --upgrade -p ${proxy} -w ${azure_id} -s ${azure_shared}"
+    } else {
+      $upgrade_command = "${path_to_download}/${downloaded_script} --upgrade -w ${azure_id} -s ${azure_shared}"
+    }
+
+    # Agent installation
+    exec { 'OMSAgent installation':
+      path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
+      command => $upgrade_command,
+      onlyif  => 'test -f /opt/microsoft/omsagent/bin/omsadmin.sh',
+      require => Exec['OMSAgent install script download'],
+    }
   } elsif ($ensure == 'absent') {
     # Uninstall Agent
     exec { 'OMSAgent uninstallation':
