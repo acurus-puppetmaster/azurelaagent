@@ -68,7 +68,7 @@ class azurelaagent::install_linux (
     mode => '0744',
   }
 
-  if (($ensure == 'present' or $ensure == 'latest') and $facts['omsagent']['installed]'] == false) {
+  if (($ensure == 'present' or $ensure == 'latest') and $facts['omsagent']['installed'] == false) {
     # Install Agent
 
     # package {$packages_to_install:
