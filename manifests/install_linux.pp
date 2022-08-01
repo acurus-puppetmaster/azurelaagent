@@ -68,7 +68,7 @@ class azurelaagent::install_linux (
     mode => '0744',
   }
 
-  if (($ensure == 'present' or $ensure == 'latest') and $facts['omsagent']['installed'] == false) {
+  if (($ensure == 'present' or $ensure == 'latest') and $::facts['omsagent']['installed'] == false) {
     # Install Agent
 
     # package {$packages_to_install:
@@ -89,7 +89,7 @@ class azurelaagent::install_linux (
       require => Exec['OMSAgent install script download'],
     }
 
-  } elsif($ensure == 'latest' and $facts['omsagent']['installed]'] == true) {
+  } elsif($ensure == 'latest' and $::facts['omsagent']['installed'] == true) {
     if ($use_proxy and $proxy != '' and $proxy != undef) {
       $upgrade_command = "${path_to_download}/${downloaded_script} --upgrade -p ${proxy} -w ${azure_id} -s ${azure_shared}"
     } else {
