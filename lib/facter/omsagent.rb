@@ -3,12 +3,12 @@ Facter.add(:omsagent) do
         value == "Linux"
     end
     setcode do
-        omsagent_hash = {}
-        if File.exists?("/opt/microsoft/omsagent/bin/omsadmin.sh") do
-            omsagent_hash['installed'] = true
+        omsagent = {}
+        if File.exists?("/opt/microsoft/omsagent/bin/omsadmin.sh")
+            omsagent['installed'] = true
         else
-            omsagent_hash['installed'] = false
+            omsagent['installed'] = false
         end
-        omsagent_hash
+        omsagent
     end
 end
