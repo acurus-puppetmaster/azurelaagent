@@ -1,7 +1,5 @@
 Facter.add(:omsagent) do
-    confine :kernel do |value|
-        value == "Linux"
-    end
+    confine :kernel => :linux
     setcode do
         omsagent = {}
         if File.exists?("/opt/microsoft/omsagent/bin/omsadmin.sh")
